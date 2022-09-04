@@ -1,16 +1,18 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+name: 'Make python'
+description: 'make, make docs, make test and publish python code'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.who-to-greet }}
+  using: "composite"
+  runs-on: ubuntu-latest
+  container:
+      image: apnpucky/ubuntu-pip:20220726175949
+  steps:
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-number::$(echo $RANDOM)"
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash          
+    - run: goodbye.sh
+      shell: bash
