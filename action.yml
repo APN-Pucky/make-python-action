@@ -20,9 +20,13 @@ runs:
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
     - run: make build
+      shell: bash
     - run: make install
+      shell: bash
     - run: make test
+      shell: bash
       if: ${{ inputs.test }}
     - name: Build Sphinx
+      shell: bash
       if: ${{ inputs.doc }}
       run: rm -rf build && make clean-all && make html
