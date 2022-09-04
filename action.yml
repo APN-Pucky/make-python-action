@@ -1,6 +1,13 @@
 # action.yml
 name: 'Make python'
 description: 'make, make docs, make test and publish python code'
+inputs:
+  publish:
+    default: false
+  test:
+    default: true
+  doc:
+    default: true
 runs:
   using: "composite"
   runs-on: ubuntu-latest
@@ -13,11 +20,11 @@ runs:
       with:
         fetch-depth: "0"
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-    - name: Build smpl
-      run: make build
-    - name: Install smpl
-      run: make install
-    - name: Tests
-      run: make test
+    
+    - run: make build
+    - run: make install
+    - run: make test
+      if: ${{ inputs.test }}
     - name: Build Sphinx
+      if: ${{ inputs.doc }}
       run: rm -rf build && make clean-all && make html
