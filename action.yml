@@ -8,13 +8,9 @@ inputs:
     default: true
   doc:
     default: false
-  image:
-    default: apnpucky/ubuntu-pip:20220726175949
+
 runs:
   using: "composite"
-  runs-on: ubuntu-latest
-  container:
-      image: ${{ inputs.image }}
   steps:
     - name: work around permission issue
       run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
