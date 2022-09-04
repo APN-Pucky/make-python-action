@@ -7,12 +7,17 @@ runs:
   container:
       image: apnpucky/ubuntu-pip:20220726175949
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-number::$(echo $RANDOM)"
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash          
-    - run: goodbye.sh
-      shell: bash
+    - name: work around permission issue
+      run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: "0"
+    - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+    - name: Build smpl
+      run: make build
+    - name: Install smpl
+      run: make install
+    - name: Tests
+      run: make test
+    - name: Build Sphinx
+      run: rm -rf build && make clean-all && make html
