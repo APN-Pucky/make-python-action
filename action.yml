@@ -27,8 +27,8 @@ runs:
       shell: bash
     - run: make test
       shell: bash
-      if: ${{ inputs.test }}
+      if: ${{ inputs.test == 'true' }}
     - name: Build Sphinx
       shell: bash
-      if: ${{ inputs.doc }}
+      if: ${{ inputs.doc == 'true' }}
       run: rm -rf build && make clean-all && make html
