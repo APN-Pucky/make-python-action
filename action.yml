@@ -8,11 +8,13 @@ inputs:
     default: true
   doc:
     default: false
+  image:
+    default: apnpucky/ubuntu-pip:20220726175949
 runs:
   using: "composite"
   runs-on: ubuntu-latest
   container:
-      image: apnpucky/ubuntu-pip:20220726175949
+      image: ${{ inputs.image }}
   steps:
     - name: work around permission issue
       run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
@@ -20,15 +22,11 @@ runs:
       with:
         fetch-depth: "0"
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-    
-    - uses: APN-Pucky/make-python/apt@main
-      with:
-        publish: ${{ inputs.publish }}
-        test: ${{ inputs.test }}
-        doc: ${{ inputs.doc }}
 
-    - uses: APN-Pucky/make-python/pip@main
-      with:
-        publish: ${{ inputs.publish }}
-        test: ${{ inputs.test }}
-        doc: ${{ inputs.doc }}
+    - run: make build
+    - run: make install
+    - run: make test
+      if: ${{ inputs.test }}
+    - name: Build Sphinx
+      if: ${{ inputs.doc }}
+      run: rm -rf build && make clean-all && make html
