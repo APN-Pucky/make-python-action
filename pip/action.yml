@@ -21,13 +21,7 @@ runs:
         fetch-depth: "0"
     - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     
-    - uses: APN-Pucky/make-python/apt@main
-      with:
-        publish: ${{ inputs.publish }}
-        test: ${{ inputs.test }}
-        doc: ${{ inputs.doc }}
-
-    - uses: APN-Pucky/make-python/pip@main
+    - uses: APN-Pucky/make-python/make@main
       with:
         publish: ${{ inputs.publish }}
         test: ${{ inputs.test }}
