@@ -8,6 +8,18 @@ inputs:
     default: true
   doc:
     default: false
+  gh-pages:
+    default: false
+  coveralls:
+    default: false
+  test-gh-pages:
+    default: false
+  test-pypi-token:
+    required: false
+  codacy-api-token:
+    required: false
+  coverage-reports:
+    default: coverage.xml
 
 runs:
   using: "composite"
@@ -31,4 +43,29 @@ runs:
     - name: Build Sphinx
       shell: bash
       if: ${{ inputs.doc == 'true' }}
-      run: rm -rf build && make clean-all && make html
+      run: rm -rf build && make clean-all && make html  
+    - name: Report Coveralls
+      if: ${{ inputs.coveralls == 'true' }}
+      uses: AndreMiras/coveralls-python-action@develop
+    - name: Report Codacy
+      if: "${{ inputs.codacy-api-token != '' }}"
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+        project-token: ${{ inputs.codacy-api-token }}
+        # or
+        #api-token: ${{ secrets.CODACY_API_TOKEN }}
+        coverage-reports: ${{ inputs.coverage-reports }}
+    - name: Deploy Test PyPI
+      if: "${{ inputs.test-pypi-token != '' }}"
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ inputs.test-pypi-token }}
+        repository_url: https://test.pypi.org/legacy/
+    - name: Upload Github Pages
+      if: ${{ inputs.test-gh-pages == 'true' }}
+      uses: JamesIves/github-pages-deploy-action@v4.4.0
+      with:
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: build/html # The folder the action should deploy.
+        target-folder: test
+
