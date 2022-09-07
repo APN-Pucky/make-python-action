@@ -14,6 +14,8 @@ inputs:
     default: false
   test-gh-pages:
     default: false
+  pypi-token:
+    required: false
   test-pypi-token:
     required: false
   codacy-api-token:
@@ -61,11 +63,22 @@ runs:
       with:
         password: ${{ inputs.test-pypi-token }}
         repository_url: https://test.pypi.org/legacy/
-    - name: Upload Github Pages
+    - name: Deploy PyPI
+      if: "${{ inputs.pypi-token != '' }}"
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ inputs.pypi-token }}
+    - name: Upload Test Github Pages
       if: ${{ inputs.test-gh-pages == 'true' }}
       uses: JamesIves/github-pages-deploy-action@v4.4.0
       with:
         BRANCH: gh-pages # The branch the action should deploy to.
         FOLDER: build/html # The folder the action should deploy.
         target-folder: test
-
+    - name: Deploy Github Pages
+      if: ${{ inputs.gh-pages == 'true' }}
+      uses: JamesIves/github-pages-deploy-action@v4.4.0
+      with:
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: build/html # The folder the action should deploy.
+        clean-exclude: test/
