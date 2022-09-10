@@ -2,6 +2,10 @@
 name: 'Make python'
 description: 'make, make docs, make test and publish python code'
 inputs:
+  build:
+    default: true
+  install:
+    default: true
   test:
     default: true
   doc:
@@ -35,8 +39,10 @@ runs:
 
     - run: make build
       shell: bash
+      if: ${{ inputs.build == 'true' }}
     - run: make install
       shell: bash
+      if: ${{ inputs.install == 'true' }}
     - run: make test
       shell: bash
       if: ${{ inputs.test == 'true' }}
