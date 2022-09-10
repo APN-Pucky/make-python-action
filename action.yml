@@ -2,8 +2,6 @@
 name: 'Make python'
 description: 'make, make docs, make test and publish python code'
 inputs:
-  publish:
-    default: false
   test:
     default: true
   doc:
