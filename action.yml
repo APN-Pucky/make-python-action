@@ -46,10 +46,9 @@ runs:
     - run: make test
       shell: bash
       if: ${{ inputs.test == 'true' }}
-    - name: Build Sphinx
+    - run: make doc  
       shell: bash
       if: ${{ inputs.doc == 'true' }}
-      run: rm -rf build && make clean-all && make html  
     - name: Report Coveralls
       if: ${{ inputs.coveralls == 'true' }}
       uses: AndreMiras/coveralls-python-action@develop
