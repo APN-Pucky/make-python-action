@@ -17,7 +17,7 @@ inputs:
   gh-pages-branch:
     default: gh-pages
   gh-pages-folder:
-    default: build/html
+    default: docs/build/html
   pypi-token:
     required: false
   test-pypi-token:
