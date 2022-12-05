@@ -1,5 +1,8 @@
 # action.yml
 name: 'Make python'
+branding:
+  icon: 'code'
+  color: 'blue'
 description: 'make, make docs, make test and publish python code'
 inputs:
   build:
