@@ -62,7 +62,7 @@ runs:
       uses: AndreMiras/coveralls-python-action@develop
     - name: Report Codacy
       if: "${{ inputs.codacy-api-token != '' }}"
-      uses: codacy/codacy-coverage-reporter-action@v1
+      uses: codacy/codacy-coverage-reporter-action@v2
       with:
         project-token: ${{ inputs.codacy-api-token }}
         # or
