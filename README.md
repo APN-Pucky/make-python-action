@@ -19,3 +19,10 @@ A simple action to build, test, doc and publish python packages mainly through M
 |10.  | Upload to Github Pages        |   `gh-pages: `           |        `false`
 |     |                               |   `gh-pages-branch:`     |  `gh-pages`    
 |     |                               |   `gh-pages-folder:`     |  `docs/build/html`    
+
+## Example Projects
+
+* https://github.com/APN-Pucky/smpl
+* https://github.com/APN-Pucky/HEPi
+* https://github.com/APN-Pucky/metamorph
+* https://github.com/APN-Pucky/pyfeyn2
