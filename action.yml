@@ -5,6 +5,8 @@ branding:
   color: 'blue'
 description: 'make, make docs, make test and publish python code'
 inputs:
+  ci:
+    default: false
   build:
     default: true
   install:
@@ -43,7 +45,10 @@ runs:
       with:
         fetch-depth: 0
         fetch-tags: true
-
+        
+    - run: make ci
+      shell: bash
+      if: ${{ inputs.ci == 'true' }}
     - run: make build
       shell: bash
       if: ${{ inputs.build == 'true' }}
