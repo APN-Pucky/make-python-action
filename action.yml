@@ -11,8 +11,12 @@ inputs:
     default: true
   install:
     default: true
+
+  python-version:
+    default: '3.9'
   test:
     default: true
+    
   doc:
     default: false
   gh-pages:
@@ -45,7 +49,9 @@ runs:
       with:
         fetch-depth: 0
         fetch-tags: true
-        
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
     - run: make ci
       shell: bash
       if: ${{ inputs.ci == 'true' }}
