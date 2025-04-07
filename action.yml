@@ -79,17 +79,17 @@ runs:
         # or
         #api-token: ${{ secrets.CODACY_API_TOKEN }}
         coverage-reports: ${{ inputs.coverage-reports }}
-    - name: Deploy Test PyPI
-      if: "${{ inputs.test-pypi-token != '' }}"
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ inputs.test-pypi-token }}
-        repository_url: https://test.pypi.org/legacy/
-    - name: Deploy PyPI
-      if: "${{ inputs.pypi-token != '' }}"
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ inputs.pypi-token }}
+    #- name: Deploy Test PyPI
+    #  if: "${{ inputs.test-pypi-token != '' }}"
+    #  uses: pypa/gh-action-pypi-publish@release/v1
+    #  with:
+    #    password: ${{ inputs.test-pypi-token }}
+    #    repository_url: https://test.pypi.org/legacy/
+    #- name: Deploy PyPI
+    #  if: "${{ inputs.pypi-token != '' }}"
+    #  uses: pypa/gh-action-pypi-publish@release/v1
+    #  with:
+    #    password: ${{ inputs.pypi-token }}
     - name: Upload Test Github Pages
       if: ${{ inputs.test-gh-pages == 'true' }}
       uses: JamesIves/github-pages-deploy-action@v4.6.3
